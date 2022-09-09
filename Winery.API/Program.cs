@@ -1,4 +1,5 @@
 using Winery.API.Data.Contexts;
+using Winery.API.Repositories.Sectors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<WineryDbContext>();
 builder.Services.AddScoped<WineryDbContext>();
+builder.Services.AddTransient<ISectorRepository, SectorRepository>();
 
 var app = builder.Build();
 

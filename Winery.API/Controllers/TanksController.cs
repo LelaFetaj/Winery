@@ -52,7 +52,7 @@ namespace Winery.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetSectorTanks")]
         public async Task<ActionResult<List<Tank>>> GetAllTanksBySectorId(Guid sectorId)
         {
             try

@@ -8,7 +8,7 @@ namespace Winery.API.Models.Entities.Sectors
 
         public string Code { get; set; }
 
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual ICollection<Tank> Tanks { get; set; } //lidhja me tabelen tjeter per foreign key
     }

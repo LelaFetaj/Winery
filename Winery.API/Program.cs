@@ -1,6 +1,8 @@
 using Winery.API.Data.Contexts;
 using Winery.API.Repositories.Sectors;
 using Winery.API.Repositories.Tanks;
+using Winery.API.Services.Sectors;
+using Winery.API.Services.Tanks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<WineryDbContext>();
 builder.Services.AddScoped<WineryDbContext>();
 builder.Services.AddTransient<ISectorRepository, SectorRepository>();
 builder.Services.AddTransient<ITankRepository, TankRepository>();
+builder.Services.AddTransient<ISectorService, SectorService>();
+builder.Services.AddTransient<ITankService, TankService>();
 
 var app = builder.Build();
 

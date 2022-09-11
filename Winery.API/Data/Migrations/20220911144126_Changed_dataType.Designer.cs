@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Winery.API.Data.Contexts;
 
@@ -11,9 +12,10 @@ using Winery.API.Data.Contexts;
 namespace Winery.API.Data.Migrations
 {
     [DbContext(typeof(WineryDbContext))]
-    partial class WineryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220911144126_Changed_dataType")]
+    partial class Changed_dataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

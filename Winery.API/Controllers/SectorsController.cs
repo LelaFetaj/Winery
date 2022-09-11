@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Winery.API.Models.DTOs.Sectors;
 using Winery.API.Models.Entities.Sectors;
-using Winery.API.Repositories.Sectors;
+using Winery.API.Services.Sectors;
 
 namespace Winery.API.Controllers
 {
@@ -9,34 +9,40 @@ namespace Winery.API.Controllers
     [Route("api/[controller]")]
     public class SectorsController : ControllerBase
     {
-        private readonly ISectorRepository sectorRepository;
+        private readonly ISectorService sectorService;
 
-        public SectorsController (ISectorRepository sectorRepository)
+        public SectorsController(ISectorService sectorService)
         {
-            this.sectorRepository = sectorRepository;
+            this.sectorService = sectorService;
 
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddSector(Sector sector)
+        public async Task<ActionResult<string>> AddSector(CreateSectorDto createSectorDto)
         {
             try
             {
-                await sectorRepository.InsertSectorAsync(sector);
-                return Ok();
+                (bool result, string message) = await sectorService.AddSectorAsync(createSectorDto);
+
+                if (result)
+                {
+                    return Ok(message);
+                }
+
+                return Problem(message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Sector>>> GetAllSectors()
+        public async Task<ActionResult<List<Sector>>> GetAllSectors(string search)
         {
             try
             {
-                List<Sector> sectors = await sectorRepository.SelectAllSectors().ToListAsync();
+                List<Sector> sectors = await sectorService.RetrieveAllSectors(search);
                 return Ok(sectors);
             }
             catch (Exception ex)
@@ -50,38 +56,50 @@ namespace Winery.API.Controllers
         {
             try
             {
-                Sector sector = await sectorRepository.SelectSectorByIdAsync(id);
+                Sector sector = await sectorService.RetrieveSectorById(id);
                 return Ok(sector);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }          
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateSector(Sector sector)
+        public async Task<ActionResult<string>> UpdateSector(UpdateSectorDto updateSectorDto)
         {
             try
             {
-                await sectorRepository.UpdateSectorAsync(sector);
-                return Ok();
+                (bool result, string message) = await sectorService.UpdateSectorAsync(updateSectorDto);
+
+                if (result)
+                {
+                    return Ok(message);
+                }
+
+                return Problem(message);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
+
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteSector(Guid id)
+        public async Task<ActionResult<string>> DeleteSector(Guid id)
         {
             try
             {
-                Sector sector = await sectorRepository.SelectSectorByIdAsync(id);
-                await sectorRepository.DeleteSectorAsync(sector);
-                return Ok();
+                (bool result, string message) = await sectorService.DeleteSectorByIdAsync(id);
+
+                if (result)
+                {
+                    return Ok(message);
+                }
+
+                return Problem(message);
+
             }
             catch (Exception ex)
             {

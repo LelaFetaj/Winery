@@ -29,7 +29,7 @@ namespace Winery.API.Controllers
                     return Ok(message);
                 }
 
-                return Problem(message);
+                return BadRequest(message);
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace Winery.API.Controllers
                     return Ok(message);
                 }
 
-                return Problem(message);
+                return BadRequest(message);
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace Winery.API.Controllers
                     return Ok(message);
                 }
 
-                return Problem(message);
+                return BadRequest(message);
 
             }
             catch (Exception ex)
